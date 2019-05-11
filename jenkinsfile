@@ -1,0 +1,16 @@
+pipeline {
+
+      any agent {
+
+              stages {
+		      stage (' SCM cehckout') {
+		      git 'Github URL'        }
+		     		
+	      stage ('Install Code'){
+
+		steps {
+		      withMaven (maven : 'LocalMaven') {
+ 		      sh 'mva install'
+			}}
+
+	}}
