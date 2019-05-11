@@ -1,20 +1,40 @@
 pipeline {
+    agent any
 
-      any agent {
 
-              stages {
-		      stage (' SCM cehckout') 
-		      	  {
-		      	  git 'https://github.com/NitinMore889/maven-project.git'
-		      	  }
-		     		
-	      	      stage ('Install Code')
-	                  {
-		           steps {
-		              withMaven (maven : 'LocalMaven') 
-		                { sh 'mva install' }
-		                }
-		           }
-	             }
-		   }
-		  }
+    stages {
+        stage('SCM Checkout'){
+          git 'https://github.com/NitinMore889/maven-project'
+        }
+  }
+    {
+        stage ('Compile Stage') {
+
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn clean compile'
+                }
+            }
+        }
+
+        stage ('Testing Stage') {
+
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn test'
+                }
+            }
+        }
+
+
+        stage ('install Stage') {
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn install'
+                }
+            }
+        }
+
+         
+}
+}
