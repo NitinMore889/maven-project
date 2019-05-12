@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+
+
+    stages {
+        stage('SCM Checkout'){
+          git 'https://github.com/NitinMore889/maven-project'
+        }
+  }
+    {
+        stage ('Packaging - Sonar') {
+
+            steps {
+                withSonarQubeEnv('Sonar'){
+                    sh 'mvn sonar:sonar clean package'}
+                }
+            }
+        }
