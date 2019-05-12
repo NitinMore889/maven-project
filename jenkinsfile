@@ -6,7 +6,6 @@ pipeline {
         stage('SCM Checkout'){
           git 'https://github.com/NitinMore889/maven-project'
         }
-  }
     {
         stage ('Packaging - Sonar') {
 
