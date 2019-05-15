@@ -1,32 +1,42 @@
 pipeline {
-
     agent any
-	
-stages {
 
-    stage ('SCM Checkout') 
-	{
-	  steps {
-	  git 'https://github.com/NitinMore889/maven-project' 
-	        }
-    } 
- 	stage ('Compile Stage') {
-	  steps	{
-	   withMaven(maven : 'LocalMaven')
-	   sh 'mvn clean compile'
-	   	}
-	}
-		stage ('Test Stage') {
-	  steps	{
-	   withMaven(maven : 'LocalMaven')
-	   sh 'mvn test'
-	        }
-	}
-		stage ('Package Stage') {
-	  steps	{
-	   withMaven(maven : 'LocalMaven')
-	   sh 'mvn package'
-	        }
-	}
-	    }
-	    }
+
+    stages {
+        stage('SCM Checkout'){
+          git 'https://github.com/NitinMore889/maven-project'
+							 }
+		   }
+       {
+        stage ('Compile Stage') {
+
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn clean compile'
+					echo 'compiling...'
+                                                }
+                  }
+                                }
+
+        stage ('Testing Stage') {
+
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn test'
+					echo 'testing...'
+												}
+				  }
+								}
+								
+		        stage ('package Stage') {
+            steps {
+                withMaven(maven : 'LocalMaven') {
+                    sh 'mvn package'
+					echo 'packging...'
+												}
+				  }
+								}
+        
+        
+        }
+        }
