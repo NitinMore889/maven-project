@@ -1,46 +1,38 @@
 pipeline {
-    agent any
 
+    ageny any
+	
+stages {
 
-    stages {
-        stage('SCM Checkout'){
-          git 'https://github.com/NitinMore889/maven-project'
-        }
-  }
+    stage ('SCM Checkout') 
+	{
+	  steps {
+	  git 'https://github.com/NitinMore889/maven-project' 
+	        }
+    } 
+	stage ('Compile Stage')
     {
-        stage ('Compile Stage') {
-
-            steps {
-                withMaven(maven : 'LocalMaven') {
-                    sh 'mvn clean compile'
-                }
-            }
-        }
-
-        stage ('Testing Stage') {
-
-            steps {
-                withMaven(maven : 'LocalMaven') {
-                    sh 'mvn test'
-                }
-            }
-        }
-
-
-        stage ('install Stage') {
-            steps {
-                withMaven(maven : 'LocalMaven') {
-                    sh 'mvn install'
-                }
-            }
-        }
-        
-        stage ('Deploy to Tomcat') {
-        steps {
-              sshagent(['8fc2811a-ef18-4a58-9028-4a69957f4ae0']) {
-              sh 'scp -o StrictHostKeyChecking=no */target/*.war ec2-user@172.31.23.248:/var/lib/tomcat/webapps'
-             }
-         }
-    }  
-  }
-}
+	  steps	{
+	   withMaven(maven : 'LocalMaven')
+	   echo 'This is compile stage in pipeline.'
+	   sh 'mvn clean compile'
+	   	        }
+	}
+		stage ('Test Stage')
+    {
+	  steps	{
+	   withMaven(maven : 'LocalMaven')
+	   echo 'This is test stage in pipeline.'
+	   sh 'mvn test'
+	        }
+	}
+			stage ('Package Stage')
+    {
+	  steps	{
+	   echo 'This is package stage in pipeline.'
+	   withMaven(maven : 'LocalMaven')
+	   sh 'mvn package'
+	        }
+	}
+	    }
+		 }
