@@ -10,29 +10,29 @@ stages {
 	  git 'https://github.com/NitinMore889/maven-project' 
 	        }
     } 
+    }
 	stage ('Compile Stage')
     {
 	  steps	{
 	   withMaven(maven : 'LocalMaven')
-	   echo 'This is compile stage in pipeline.'
 	   sh 'mvn clean compile'
-	   	        }
+	   	}
+	  steps {
+	   echo 'This is compile stage in pipeline.'
+	   }
 	}
 		stage ('Test Stage')
     {
 	  steps	{
 	   withMaven(maven : 'LocalMaven')
-	   echo 'This is test stage in pipeline.'
 	   sh 'mvn test'
 	        }
 	}
 			stage ('Package Stage')
     {
 	  steps	{
-	   echo 'This is package stage in pipeline.'
 	   withMaven(maven : 'LocalMaven')
 	   sh 'mvn package'
 	        }
 	}
 	    }
-		 }
