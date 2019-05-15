@@ -28,7 +28,7 @@ pipeline {
 				  }
 								}
 								
-		        stage ('package Stage') {
+		        stage ('Package Stage') {
             steps {
                 withMaven(maven : 'LocalMaven') {
                     sh 'mvn package'
